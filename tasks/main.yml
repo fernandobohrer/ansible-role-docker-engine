@@ -1,0 +1,69 @@
+---
+- name: Uninstall unofficial docker packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - containerd
+    - docker-compose
+    - docker-doc
+    - docker.io
+    - podman-docker
+    - runc
+
+- name: Uninstall unofficial docker packages for Ubuntu
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - docker-compose-v2
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Ensure keyrings directory exists
+  ansible.builtin.file:
+    path: "{{ __keyrings_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "755"
+
+- name: Install docker repository key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+    dest: "{{ __docker_repository_key }}"
+    owner: root
+    group: root
+    mode: "644"
+
+- name: Set system architecture
+  ansible.builtin.command: dpkg --print-architecture
+  register: system_architecture
+  changed_when: false
+
+- name: Install docker repository
+  ansible.builtin.apt_repository:
+    repo: |
+      deb [arch={{ system_architecture.stdout }} signed-by={{ __docker_repository_key }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
+    state: present
+    update_cache: true
+    filename: docker
+
+- name: Install docker
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+  with_items:
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-ce
+    - docker-ce-cli
+    - docker-compose-plugin
+
+- name: Add users to the docker group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"

@@ -1,0 +1,5 @@
+---
+
+__keyrings_directory: /etc/apt/keyrings
+
+__docker_repository_key: "{{ __keyrings_directory }}/docker.asc"

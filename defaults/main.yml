@@ -1,0 +1,6 @@
+---
+apt_cache_valid_time: 3600
+
+# Optional 'docker_users' variable:
+# Only required if you want to add specific users to the 'docker' group.
+docker_users: []
