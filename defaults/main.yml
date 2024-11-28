@@ -3,4 +3,6 @@ apt_cache_valid_time: 3600
 
 # Optional 'docker_users' variable:
 # Only required if you want to add specific users to the 'docker' group.
+# Please note that the ansible_user detailed below is added to the 'docker' group by default.
+# https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#term-ansible_user
 docker_users: []

@@ -66,4 +66,6 @@
     name: "{{ item }}"
     groups: docker
     append: true
-  with_items: "{{ docker_users }}"
+  with_items:
+    - "{{ ansible_user }}"
+    - "{{ docker_users }}"
