@@ -1,65 +1,51 @@
 ---
-- name: Uninstall unofficial docker packages
+- name: Uninstall unofficial docker packages for Debian
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name: "{{ __docker_engine__debian_unofficial_packages }}"
     state: absent
-  with_items:
-    - containerd
-    - docker-compose
-    - docker-doc
-    - docker.io
-    - podman-docker
-    - runc
+  when: ansible_distribution == 'Debian'
 
 - name: Uninstall unofficial docker packages for Ubuntu
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name: "{{ __docker_engine__ubuntu_unofficial_packages }}"
     state: absent
-  with_items:
-    - docker-compose-v2
   when: ansible_distribution == 'Ubuntu'
 
 - name: Ensure keyrings directory exists
   ansible.builtin.file:
-    path: "{{ __keyrings_directory }}"
+    path: "{{ __docker_engine__keyrings_directory }}"
     state: directory
     owner: root
     group: root
     mode: "755"
 
-- name: Install docker repository key
+- name: Deploy docker repository key
   ansible.builtin.get_url:
     url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
-    dest: "{{ __docker_repository_key }}"
+    dest: "{{ __docker_engine__repository_key }}"
     owner: root
     group: root
     mode: "644"
 
-- name: Set system architecture
+- name: Get system's architecture
   ansible.builtin.command: dpkg --print-architecture
-  register: system_architecture
+  register: docker_engine__system_architecture
   changed_when: false
 
-- name: Install docker repository
+- name: Deploy docker repository
   ansible.builtin.apt_repository:
     repo: |
-      deb [arch={{ system_architecture.stdout }} signed-by={{ __docker_repository_key }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
+      deb [arch={{ docker_engine__system_architecture.stdout }} signed-by={{ __docker_engine__repository_key }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
     state: present
     update_cache: true
     filename: docker
 
-- name: Install docker
+- name: Deploy docker
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name: "{{ __docker_engine__official_packages }}"
     state: present
     update_cache: true
     cache_valid_time: "{{ apt_cache_valid_time }}"
-  with_items:
-    - containerd.io
-    - docker-buildx-plugin
-    - docker-ce
-    - docker-ce-cli
-    - docker-compose-plugin
 
 - name: Add users to the docker group
   ansible.builtin.user:
@@ -67,5 +53,4 @@
     groups: docker
     append: true
   with_items:
-    - "{{ ansible_user }}"
-    - "{{ docker_users }}"
+    - "{{ docker_engine__users }}"

@@ -1,9 +1,8 @@
 ---
-dependencies: []
 galaxy_info:
-  role_name: docker
+  role_name: docker_engine
   author: fernandobohrer
-  description: docker
+  description: docker_engine
   license: MIT
   min_ansible_version: "2.1"
   platforms:
@@ -14,5 +13,5 @@ galaxy_info:
       versions:
         - jammy
         - noble
-  galaxy_tags:
-    - docker
+  galaxy_tags: []
+dependencies: []

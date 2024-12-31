@@ -1,4 +1,4 @@
-# Ansible Role: docker
+# Ansible Role: docker_engine
 
 An Ansible role that deploys [Docker][01] on Linux boxes.
 
@@ -8,7 +8,7 @@ Installing docker manually on several hosts can be tedious. It would be nice to 
 
 ## 📑 Role Variables
 
-Check `defaults/main.yml`.
+Check [here][02].
 
 ## 🧰 Dependencies
 
@@ -25,10 +25,10 @@ An example of how integrate this role to an Ansible playbook can be found here:
   become: true
   gather_facts: true
   roles:
-    - fernandobohrer.docker
+    - fernandobohrer.docker_engine
 ```
 
-If you want to add the `johndoe` user do the `docker` group, just add the user to the `docker_users` variable:
+If you want to add the `johndoe` user do the `docker` group, just add the user to the `docker_engine__users` variable:
 
 ```yml
 ---
@@ -37,10 +37,10 @@ If you want to add the `johndoe` user do the `docker` group, just add the user t
   become: true
   gather_facts: true
   vars:
-    docker_users:
+    docker_engine__users:
       - johndoe
   roles:
-    - fernandobohrer.docker
+    - fernandobohrer.docker_engine
 ```
 
 ## ⚙️ Compatibility
@@ -51,7 +51,7 @@ This role was tested on and is confirmed to work with the following Linux distri
 - `Ubuntu 22.04`
 - `Ubuntu 24.04`
 
-Details can be found in the [Molecule][02] scenarios available in the `molecule` folder.
+Details can be found in the [Molecule][03] scenarios available in the `molecule` folder.
 
 ## ⚠️ Warning
 
@@ -61,8 +61,9 @@ With the above in mind, it is **imperative** that you familiarize yourself with 
 
 ## 📝 License
 
-This project is licensed under the terms of the [MIT license][03].
+This project is licensed under the terms of the [MIT license][04].
 
 [01]: https://docs.docker.com/engine/
-[02]: https://github.com/fernandobohrer/ansible-molecule-scenarios
-[03]: /LICENSE
+[02]: defaults/main.yml
+[03]: https://github.com/fernandobohrer/ansible-molecule-scenarios
+[04]: /LICENSE
