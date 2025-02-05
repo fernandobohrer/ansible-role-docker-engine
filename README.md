@@ -1,10 +1,10 @@
 # Ansible Role: docker_engine
 
-An Ansible role that deploys [Docker][01] on Linux boxes.
+An Ansible role that deploys the [Docker Engine][01] on Linux boxes.
 
 ## 🚀 Motivation
 
-Installing docker manually on several hosts can be tedious. It would be nice to automate this task.
+Installing the Docker Engine manually on several hosts can be tedious. It would be nice to automate this task.
 
 ## 📑 Role Variables
 
@@ -20,7 +20,7 @@ An example of how integrate this role to an Ansible playbook can be found here:
 
 ```yml
 ---
-- name: Deploy docker
+- name: Deploy Docker Engine
   hosts: all
   become: true
   gather_facts: true
@@ -32,7 +32,7 @@ If you want to add the `johndoe` user do the `docker` group, just add the user t
 
 ```yml
 ---
-- name: Deploy docker
+- name: Deploy Docker Engine
   hosts: all
   become: true
   gather_facts: true
