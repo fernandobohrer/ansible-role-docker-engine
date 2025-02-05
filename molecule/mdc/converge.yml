@@ -4,5 +4,7 @@
   become: true
   gather_facts: true
 
-  roles:
-    - fernandobohrer.docker_engine
+  tasks:
+    - name: Apply role
+      ansible.builtin.include_role:
+        name: ansible-role-docker-engine
