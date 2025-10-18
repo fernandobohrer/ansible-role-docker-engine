@@ -47,8 +47,7 @@ If you want to add the `johndoe` user do the `docker` group, just add the user t
 
 This role was tested on and is confirmed to work with the following Linux distributions:
 
-- `Debian 12`
-- `Ubuntu 22.04`
+- `Debian 13`
 - `Ubuntu 24.04`
 
 Details can be found in the [Molecule][03] scenarios available in the `molecule` folder.
