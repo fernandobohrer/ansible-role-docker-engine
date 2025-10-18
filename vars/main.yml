@@ -1,4 +1,7 @@
 ---
+__docker_engine__role_dependencies:
+  - gpg
+
 __docker_engine__keyrings_directory: /etc/apt/keyrings
 
 __docker_engine__repository_key: "{{ __docker_engine__keyrings_directory }}/docker.asc"

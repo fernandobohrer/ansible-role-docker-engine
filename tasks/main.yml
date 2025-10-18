@@ -11,6 +11,13 @@
     state: absent
   when: ansible_distribution == 'Ubuntu'
 
+- name: Ensure role dependencies are installed
+  ansible.builtin.apt:
+    name: "{{ __docker_engine__role_dependencies }}"
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+
 - name: Ensure keyrings directory exists
   ansible.builtin.file:
     path: "{{ __docker_engine__keyrings_directory }}"
