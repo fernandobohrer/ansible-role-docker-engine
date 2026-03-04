@@ -8,7 +8,7 @@ Installing the Docker Engine manually on several hosts can be tedious. It would 
 
 ## 📑 Role Variables
 
-Check [here][02].
+Check [defaults/main.yml][02].
 
 ## 🧰 Dependencies
 
